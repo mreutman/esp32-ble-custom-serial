@@ -1,0 +1,40 @@
+#! /usr/bin/env python3
+
+import uuid
+
+print("Copy the below definitions into ble_server_config.c to use the "
+      "following 128 bit UUIDs for the BLE server.")
+
+print("\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n")
+
+u = uuid.uuid4()
+print("// " + str(u))
+print("static uint8_t ble_service_uuid128[16] = {")
+
+# walk through uuid backwards, array is little endian
+for n in range(len(u.hex)-2, -2, -2):
+  s = "0x" + str(u.hex[n]) + str(u.hex[n + 1])
+
+  if n > 0:
+    s = s + ","
+
+  print(s, end="")
+
+print("\n", end="")
+print("};\n")
+
+u = uuid.uuid4()
+print("// " + str(u))
+print("static uint8_t ble_characteristic_uuid128[16] = {")
+
+# walk through uuid backwards, array is little endian
+for n in range(len(u.hex)-2, -2, -2):
+  s = "0x" + str(u.hex[n]) + str(u.hex[n + 1])
+
+  if n > 0:
+    s = s + ","
+
+  print(s, end="")
+
+print("\n", end="")
+print("};")
